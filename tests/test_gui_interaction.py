@@ -35,12 +35,23 @@ def visible_app(loaded_app):
 
 
 def cell_event(app, block, column):
-    app.tree.see(str(block))
-    app.update_idletasks()
-    box = app.tree.bbox(str(block), column)
+    """Coordinates inside the given cell, verified against Tk's own hit test.
+
+    The point sits at the horizontal centre of the column but near the top of
+    the row, because the last visible row can be clipped on a small screen.
+    """
+    iid = str(block)
+    app.tree.see(iid)
+    app.update()
+    box = app.tree.bbox(iid, column)
     if not box:
         pytest.skip("the table row is not visible in this environment")
-    return Event(box[0] + box[2] // 2, box[1] + box[3] // 2)
+    event = Event(box[0] + box[2] // 2, box[1] + 3)
+    if (app.tree.identify_row(event.y) != iid
+            or app.tree.identify_column(event.x) != column
+            or app.tree.identify_region(event.x, event.y) != "cell"):
+        pytest.skip("the cell is clipped by the screen size in this environment")
+    return event
 
 
 def editors(app, kind):

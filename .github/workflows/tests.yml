@@ -44,7 +44,7 @@ jobs:
 
       - name: Test (Linux, virtual display)
         if: runner.os == 'Linux'
-        run: xvfb-run -a python -m pytest tests/ -q --cov=felica_core
+        run: xvfb-run -a --server-args="-screen 0 1600x1200x24" python -m pytest tests/ -q --cov=felica_core
           --cov=felica_type3 --cov=ndef_tools --cov=nfc_reader_writer
           --cov-report=term-missing
 
