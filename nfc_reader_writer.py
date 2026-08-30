@@ -41,8 +41,12 @@ from felica_core import (ALL_BLOCKS, BLOCK_CK, BLOCK_DESCRIPTIONS,
                          SUPPORTED_ENCODINGS, MCBlockHandler, NfcController,
                          is_hex)
 
-APP_NAME = "NFC Reader/Writer"
-APP_VERSION = "2.0.0"
+from version import APP_NAME, APP_VERSION, VERSION_STRING
+
+__version__ = APP_VERSION
+
+#: Version of the .json state format, which continues the numbering of the tool
+#: this application replaces, so its exports (version 4.0 and older) still load.
 JSON_FORMAT_VERSION = 5.0
 
 HEX_NA_SKIPPED = "N/A (write-only)"
@@ -257,7 +261,7 @@ class NfcApp(tk.Tk):
         self.test_file_path = test_file
         self.device = device
 
-        title = "%s %s" % (APP_NAME, APP_VERSION)
+        title = VERSION_STRING
         if self.test_mode:
             title += "  [TEST MODE - no reader used]"
         self.title(title)
@@ -1384,7 +1388,7 @@ class NfcApp(tk.Tk):
         try:
             state = {
                 "format_version": JSON_FORMAT_VERSION,
-                "application": "%s %s" % (APP_NAME, APP_VERSION),
+                "application": VERSION_STRING,
                 "timestamp": datetime.now().isoformat(),
                 "card_info": self.card_info,
                 "lock_status": "LOCKED" if self.is_card_locked else "UNLOCKED",
@@ -1489,7 +1493,7 @@ class NfcApp(tk.Tk):
         encoding = self.encoding_var.get()
         lines = [
             "#" * 72,
-            "# %s %s - card report" % (APP_NAME, APP_VERSION),
+            "# %s - card report" % VERSION_STRING,
             "# Generated: %s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "#" * 72,
             "Card type:          %s" % self.card_info.get("product", "-"),
@@ -1757,6 +1761,7 @@ def main(argv=None):
                              "from a binary dump")
     parser.add_argument("--device", default="usb",
                         help="nfcpy device path (default: usb)")
+    parser.add_argument("--version", action="version", version=VERSION_STRING)
     args = parser.parse_args(argv)
 
     test_file = args.test or None

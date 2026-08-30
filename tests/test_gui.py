@@ -444,3 +444,31 @@ def test_the_application_reports_a_missing_reader(app, monkeypatch):
     app.on_read_card()
 
     assert errors and "nfcpy is not installed" in errors[0][1]
+
+
+def test_the_version_is_defined_in_one_place():
+    import version
+
+    assert version.__version__ == app_module.__version__
+    assert version.VERSION_STRING == "%s %s" % (version.APP_NAME,
+                                                version.__version__)
+    # Three digits, so a release tag can be derived from it.
+    assert len(version.__version__.split(".")) == 3
+
+
+def test_the_version_reaches_the_title_and_the_exports(loaded_app, tmp_path):
+    assert app_module.APP_VERSION in loaded_app.title()
+    assert app_module.APP_VERSION in "\n".join(loaded_app.build_report())
+
+    path = tmp_path / "state.json"
+    app_module.filedialog.asksaveasfilename = lambda **kwargs: str(path)
+    loaded_app.on_save_json()
+    state = json.loads(path.read_text(encoding="utf-8"))
+    assert state["application"] == app_module.VERSION_STRING
+
+
+def test_the_version_flag_prints_and_exits(capsys):
+    with pytest.raises(SystemExit) as excinfo:
+        app_module.main(["--version"])
+    assert excinfo.value.code == 0
+    assert app_module.VERSION_STRING in capsys.readouterr().out

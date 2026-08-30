@@ -1,7 +1,7 @@
 # Testing
 
 ```bash
-python -m pytest                      # 216 tests, ~5 s, no reader needed
+python -m pytest                      # 219 tests, ~5 s, no reader needed
 python -m pytest --cov=felica_core --cov=felica_type3 \
     --cov=ndef_tools --cov=nfc_reader_writer --cov-report=term-missing
 python -m pytest tests/test_core_io.py -k write -v

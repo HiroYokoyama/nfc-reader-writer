@@ -1,6 +1,15 @@
 # NFC Reader/Writer
 
+[![Status](https://img.shields.io/badge/status-under%20development-orange)](https://github.com/HiroYokoyama/nfc-reader-writer)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/HiroYokoyama/nfc-reader-writer/releases)
 [![Tests](https://github.com/HiroYokoyama/nfc-reader-writer/actions/workflows/tests.yml/badge.svg)](https://github.com/HiroYokoyama/nfc-reader-writer/actions/workflows/tests.yml)
+[![Python](https://img.shields.io/badge/python-3.9%20%7C%203.13-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
+
+> **Under development.** The card logic is covered by 219 tests against a FeliCa
+> simulator, but it has not yet been exercised against real reader hardware.
+> Back up a card (*Save state*) before writing to it, and treat *Permanently
+> lock card* with the respect an irreversible operation deserves.
 
 A desktop tool for reading and writing NFC tags with an nfcpy-supported reader
 (PaSoRi RC-S380, ACR122U, SCL3711, …).
@@ -23,6 +32,7 @@ Three panels share one reader:
 | [docs/testing.md](docs/testing.md) | The card simulator, the GUI fixtures, how to write a new test |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Reader and driver problems, failed writes, lost keys, locked cards |
 | [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) | The libraries this project uses and their licences |
+| [CHANGELOG.md](CHANGELOG.md) | What changed in each release |
 
 ## Install
 
@@ -111,11 +121,12 @@ NDEF area are shown next to the buttons.
 ## Development
 
 ```
+version.py              the application name and version, defined once
 felica_core.py          memory map, MC block handling, reader operations
 felica_type3.py         generic Type 3 / FeliCa Standard support
 ndef_tools.py           NDEF reading, writing and formatting
 nfc_reader_writer.py    the Tkinter application
-tests/                  216 tests, no reader or card required
+tests/                  219 tests, no reader or card required
 ```
 
 | Test file | Covers |
@@ -131,7 +142,7 @@ tests/                  216 tests, no reader or card required
 | `test_gui_tools.py` | the key generator, the converter, failure dialogs |
 
 ```bash
-python -m pytest                      # 216 tests, ~5 s
+python -m pytest                      # 219 tests, ~5 s
 python -m pytest --cov=felica_core --cov=felica_type3 \
     --cov=ndef_tools --cov=nfc_reader_writer --cov-report=term-missing
 ```
