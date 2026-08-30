@@ -40,7 +40,7 @@ jobs:
           pip install pytest pytest-cov pyflakes
 
       - name: Lint
-        run: python -m pyflakes *.py tests/*.py
+        run: python -m pyflakes .   # PowerShell does not expand globs for the process
 
       - name: Test (Linux, virtual display)
         if: runner.os == 'Linux'

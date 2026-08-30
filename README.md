@@ -13,6 +13,16 @@ Three panels share one reader:
 | **Type 3 Explorer** | Enumerate systems, areas and services; dump key-less services; read/write single blocks through any service code | Any NFC Forum Type 3 tag, including FeliCa Standard and Mobile FeliCa |
 | **NDEF** | Read, write and format NDEF messages (text and URI records) | Any tag type nfcpy supports — Type 1–5: Topaz, MIFARE Ultralight / NTAG, ISO 15693, FeliCa … |
 
+## Documentation
+
+| Document | Contents |
+|---|---|
+| [docs/usage.md](docs/usage.md) | Step-by-step walkthroughs: back up a card, edit data, change access rights, protect with a key, lock, explore a Standard card, NDEF |
+| [docs/felica-lite-s.md](docs/felica-lite-s.md) | The card itself: memory map, MC block bit layout, authentication, card key and locking |
+| [docs/architecture.md](docs/architecture.md) | Module layout, the result contract, the threading model, how to add a card type or a panel |
+| [docs/testing.md](docs/testing.md) | The card simulator, the GUI fixtures, how to write a new test |
+| [docs/troubleshooting.md](docs/troubleshooting.md) | Reader and driver problems, failed writes, lost keys, locked cards |
+
 ## Install
 
 ```bash
