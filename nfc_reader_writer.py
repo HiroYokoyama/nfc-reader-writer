@@ -12,6 +12,11 @@ Three panels share one reader:
   blocks through a chosen service code.
 * **NDEF** - read and write NDEF messages on any tag type nfcpy supports
   (Type 1-5: Topaz, MIFARE Ultralight / NTAG, ISO 15693, FeliCa ...).
+
+Source code, README, and full license (GNU GPL v3):
+    https://github.com/HiroYokoyama/nfc-reader-writer
+Copyright (c) HiroYokoyama. Licensed under the GNU General Public License;
+see the LICENSE file in the repository above for the full terms.
 """
 import argparse
 import binascii

@@ -22,6 +22,7 @@ Three panels share one reader:
 | [docs/architecture.md](docs/architecture.md) | Module layout, the result contract, the threading model, how to add a card type or a panel |
 | [docs/testing.md](docs/testing.md) | The card simulator, the GUI fixtures, how to write a new test |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Reader and driver problems, failed writes, lost keys, locked cards |
+| [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) | The libraries this project uses and their licences |
 
 ## Install
 
@@ -144,3 +145,15 @@ protocol — including the triple-DES mutual authentication, read-with-MAC and
 write-with-MAC paths — against a simulated Lite, Lite-S or Standard card. The
 GUI tests drive a real (hidden) Tk instance; a few of them briefly show the
 window because Tk only reports cell geometry for a mapped window.
+
+## License
+
+GNU General Public License v3.0 — see [LICENSE](LICENSE).
+
+The reader communication is done through [nfcpy](https://github.com/nfcpy/nfcpy)
+(EUPL), which is installed from PyPI and not distributed with this project. GPL-3.0
+keeps this application compatible with it; the dependency licences are listed in
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+FeliCa is a trademark of Sony Corporation. This project is not affiliated with
+or endorsed by Sony.

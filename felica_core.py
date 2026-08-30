@@ -6,6 +6,11 @@ This module deliberately contains no GUI code so that it can be imported and
 tested without a display or a reader attached.  All block numbers and semantics
 follow the FeliCa Lite-S User's Manual and are cross-checked against nfcpy's own
 ``nfc.tag.tt3_sony`` implementation.
+
+Source code, README, and full license (GNU GPL v3):
+    https://github.com/HiroYokoyama/nfc-reader-writer
+Copyright (c) HiroYokoyama. Licensed under the GNU General Public License;
+see the LICENSE file in the repository above for the full terms.
 """
 import binascii
 import time

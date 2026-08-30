@@ -6,6 +6,11 @@ Everything here works on any Type 3 tag, including FeliCa Standard and Mobile
 FeliCa cards: it enumerates systems, areas and services, and reads or writes raw
 blocks through a caller-chosen service code.  Nothing in this module assumes the
 FeliCa Lite memory map.
+
+Source code, README, and full license (GNU GPL v3):
+    https://github.com/HiroYokoyama/nfc-reader-writer
+Copyright (c) HiroYokoyama. Licensed under the GNU General Public License;
+see the LICENSE file in the repository above for the full terms.
 """
 import struct
 

@@ -5,6 +5,11 @@
 Works with NFC Forum Type 1-5 tags (Topaz, MIFARE Ultralight / NTAG, FeliCa
 Lite/Lite-S formatted for NDEF, ISO 15693 ...), because it only uses the generic
 ``tag.ndef`` interface rather than any card-specific memory map.
+
+Source code, README, and full license (GNU GPL v3):
+    https://github.com/HiroYokoyama/nfc-reader-writer
+Copyright (c) HiroYokoyama. Licensed under the GNU General Public License;
+see the LICENSE file in the repository above for the full terms.
 """
 from felica_core import CardError, describe_tag
 
