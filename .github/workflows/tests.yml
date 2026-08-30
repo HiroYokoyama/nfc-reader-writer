@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: "3.9"
+          - os: ubuntu-latest
+            python-version: "3.13"
+          - os: windows-latest
+            python-version: "3.13"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Tk and Xvfb (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-tk xvfb
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pyflakes
+
+      - name: Lint
+        run: python -m pyflakes *.py tests/*.py
+
+      - name: Test (Linux, virtual display)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python -m pytest tests/ -q --cov=felica_core
+          --cov=felica_type3 --cov=ndef_tools --cov=nfc_reader_writer
+          --cov-report=term-missing
+
+      - name: Test (Windows)
+        if: runner.os == 'Windows'
+        run: python -m pytest tests/ -q --cov=felica_core --cov=felica_type3
+          --cov=ndef_tools --cov=nfc_reader_writer --cov-report=term-missing

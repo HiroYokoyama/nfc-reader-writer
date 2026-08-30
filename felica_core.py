@@ -191,14 +191,16 @@ def describe_tag(tag):
     kind = KIND_OTHER
     if NFC_AVAILABLE:
         import nfc.tag.tt3_sony as sony
+        # Most specific first: FelicaLiteS derives from FelicaLite, and
+        # FelicaMobile derives from FelicaStandard.
         if isinstance(tag, sony.FelicaLiteS):
             kind = KIND_LITE_S
         elif isinstance(tag, sony.FelicaLite):
             kind = KIND_LITE
-        elif isinstance(tag, sony.FelicaStandard):
-            kind = KIND_STANDARD
         elif isinstance(tag, sony.FelicaMobile):
             kind = KIND_MOBILE
+        elif isinstance(tag, sony.FelicaStandard):
+            kind = KIND_STANDARD
         elif isinstance(tag, sony.FelicaPlug):
             kind = KIND_PLUG
         elif isinstance(tag, nfc.tag.tt3.Type3Tag):

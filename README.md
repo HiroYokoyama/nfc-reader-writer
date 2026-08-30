@@ -1,5 +1,7 @@
 # NFC Reader/Writer
 
+[![Tests](https://github.com/HiroYokoyama/nfc-reader-writer/actions/workflows/tests.yml/badge.svg)](https://github.com/HiroYokoyama/nfc-reader-writer/actions/workflows/tests.yml)
+
 A desktop tool for reading and writing NFC tags with an nfcpy-supported reader
 (PaSoRi RC-S380, ACR122U, SCL3711, …).
 
@@ -18,7 +20,7 @@ pip install -r requirements.txt
 python nfc_reader_writer.py
 ```
 
-Requires Python 3.8+ with Tkinter (bundled with the python.org installers).
+Requires Python 3.9+ with Tkinter (bundled with the python.org installers).
 On Windows the reader needs a libusb-compatible driver — install one with
 [Zadig](https://zadig.akeo.ie/) if nfcpy reports "no reader found".
 
@@ -102,14 +104,29 @@ felica_core.py          memory map, MC block handling, reader operations
 felica_type3.py         generic Type 3 / FeliCa Standard support
 ndef_tools.py           NDEF reading, writing and formatting
 nfc_reader_writer.py    the Tkinter application
-tests/                  152 tests, no reader or card required
+tests/                  216 tests, no reader or card required
 ```
 
+| Test file | Covers |
+|---|---|
+| `test_mc_block.py` | MC bit layout, round trips, Lite vs Lite-S, nfcpy's own protect masks |
+| `test_core_io.py` | read / write / card key / lock against a simulated card |
+| `test_core_edge_cases.py` | reader errors, refused activation, failed verification |
+| `test_type3.py`, `test_type3_edge_cases.py` | system and service enumeration, raw block access |
+| `test_ndef.py` | NDEF read, write, format, capacity and read-only handling |
+| `test_gui.py` | table population, editing, file round trips, test mode |
+| `test_gui_workers.py` | every button, end-to-end through the controller to the card |
+| `test_gui_interaction.py` | mouse clicks, the access-rights dropdown, tooltips |
+| `test_gui_tools.py` | the key generator, the converter, failure dialogs |
+
 ```bash
-python -m pytest tests/ -q
-python -m pytest tests/ -q --cov=felica_core --cov=felica_type3 \
+python -m pytest                      # 216 tests, ~5 s
+python -m pytest --cov=felica_core --cov=felica_type3 \
     --cov=ndef_tools --cov=nfc_reader_writer --cov-report=term-missing
 ```
+
+Coverage is 95% overall, 99% of the card layer. The suite runs in CI on Linux
+(under Xvfb) and Windows, on Python 3.9 and 3.13.
 
 `tests/fake_card.py` is an in-memory FeliCa simulator that subclasses nfcpy's
 own tag classes and replaces only the transport, so the tests exercise the real
